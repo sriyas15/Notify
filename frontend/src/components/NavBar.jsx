@@ -1,16 +1,23 @@
 import { PlusIcon,Sun,Moon } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
 
   const [ theme,setTheme ] = useState("light");
 
+  useEffect(()=>{
+    const savedTheme = localStorage.getItem("themes") || "light";
+    setTheme(savedTheme);
+    document.documentElement.setAttribute("data-theme",savedTheme);
+  },[])
+
   const toggleTheme = ()=>{
 
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
     document.documentElement.setAttribute("data-theme",newTheme);
+    localStorage.setItem("themes",newTheme);
   }
 
   return (
